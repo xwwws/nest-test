@@ -40,3 +40,11 @@ npm run start:dev
 | sub-app       | app         | Generate a new application within a monorepo |
 
 
+## session
+```shell
+npm install express-session --save
+```
+```shell
+npm i @types/express-session -D
+```
+
