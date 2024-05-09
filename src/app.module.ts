@@ -7,11 +7,12 @@ import { UserModule } from './user/user.module';
 import { FactoryTestServiceService } from "./factory-test-service/factory-test-service.service";
 import { ListModule } from './list/list.module';
 import { ConfigModule } from "./config/config.module";
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [ TestModule, UserModule, ListModule, ConfigModule.forRoot({
     path: '/wz'
-  }) ],
+  }), UploadModule ],
   controllers: [ AppController, TestController ],
   providers: [
     AppService,

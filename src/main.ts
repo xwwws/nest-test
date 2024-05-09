@@ -4,15 +4,16 @@ import * as session from 'express-session';
 import { VersioningType } from "@nestjs/common";
 import { Request, Response, NextFunction } from 'express';
 import * as cors from 'cors'
+import { NestExpressApplication } from "@nestjs/platform-express";
+import { join } from "path";
 const whiteList = [ '/list' ];
-
 /**
  * 全局白名单中间件
  * @param req
  * @param res
  * @param next
  */
-function middlewareAll(req: Request, res: Response, next: NextFunction) {
+function middlewareWhiteList(req: Request, res: Response, next: NextFunction) {
   if (whiteList.includes(req.originalUrl)) {
     next();
   } else {
@@ -21,10 +22,11 @@ function middlewareAll(req: Request, res: Response, next: NextFunction) {
 }
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableVersioning({
     type: VersioningType.URI
   });
+  // 跨域问题解决
   app.use(cors())
   app.use(session({
     secret: "user", // 加盐
@@ -34,7 +36,13 @@ async function bootstrap() {
       maxAge: 24 * 60 * 60 * 1000
     }
   }));
-  app.use(middlewareAll);
+
+  // 配置静态资源访问目录
+  app.useStaticAssets(join(__dirname, 'images'),{
+    prefix: '/img'
+  })
+  //   全局白名单
+  // app.use(middlewareWhiteList);
 
   await app.listen(3000);
 }
