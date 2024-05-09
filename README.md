@@ -16,6 +16,11 @@ npm run start:dev
 ```
 
 ## 命令
+```shell
+# Generate a module declaration
+# 生成模块文件
+nest g s mo
+```
 
 | name          | alias       | description                                  |
 |---------------|-------------|----------------------------------------------|
