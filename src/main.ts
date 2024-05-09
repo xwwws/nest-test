@@ -6,6 +6,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as cors from 'cors'
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { join } from "path";
+import { ResponseFmt } from "./common/response";
 const whiteList = [ '/list' ];
 /**
  * 全局白名单中间件
@@ -43,7 +44,7 @@ async function bootstrap() {
   })
   //   全局白名单
   // app.use(middlewareWhiteList);
-
+app.useGlobalInterceptors(new ResponseFmt())
   await app.listen(3000);
 }
 
