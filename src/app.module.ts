@@ -5,9 +5,11 @@ import { TestController } from './test/test.controller';
 import { TestModule } from './test/test.module';
 import { UserModule } from './user/user.module';
 import { FactoryTestServiceService } from "./factory-test-service/factory-test-service.service";
+import { ListModule } from './list/list.module';
+import { ConfigModule } from "./config/config.module";
 
 @Module({
-  imports: [ TestModule, UserModule ],
+  imports: [ TestModule, UserModule, ListModule, ConfigModule ],
   controllers: [ AppController, TestController ],
   providers: [
     AppService,
