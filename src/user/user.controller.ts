@@ -22,7 +22,6 @@ export class UserController {
 
   @Get()
   findAll(@Query() req: any) {
-    console.log(req);
     return {
       statusCode: 200,
       ...req
