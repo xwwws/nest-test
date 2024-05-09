@@ -9,7 +9,9 @@ import { ListModule } from './list/list.module';
 import { ConfigModule } from "./config/config.module";
 
 @Module({
-  imports: [ TestModule, UserModule, ListModule, ConfigModule ],
+  imports: [ TestModule, UserModule, ListModule, ConfigModule.forRoot({
+    path: '/wz'
+  }) ],
   controllers: [ AppController, TestController ],
   providers: [
     AppService,
