@@ -3,9 +3,21 @@ import { AppModule } from './app.module';
 import * as session from 'express-session';
 import { VersioningType } from "@nestjs/common";
 import { Request, Response, NextFunction } from 'express';
+import * as cors from 'cors'
+const whiteList = [ '/list' ];
 
+/**
+ * 全局白名单中间件
+ * @param req
+ * @param res
+ * @param next
+ */
 function middlewareAll(req: Request, res: Response, next: NextFunction) {
-  next();
+  if (whiteList.includes(req.originalUrl)) {
+    next();
+  } else {
+    res.send({name:'小黑子露出犄角了吧'});
+  }
 }
 
 async function bootstrap() {
@@ -13,6 +25,7 @@ async function bootstrap() {
   app.enableVersioning({
     type: VersioningType.URI
   });
+  app.use(cors())
   app.use(session({
     secret: "user", // 加盐
     name: "user.sid", //
