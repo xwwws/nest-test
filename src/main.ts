@@ -2,12 +2,17 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as session from 'express-session';
 import { VersioningType } from "@nestjs/common";
+import { Request, Response, NextFunction } from 'express';
+
+function middlewareAll(req: Request, res: Response, next: NextFunction) {
+  next();
+}
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableVersioning({
     type: VersioningType.URI
-  })
+  });
   app.use(session({
     secret: "user", // 加盐
     name: "user.sid", //
@@ -15,7 +20,10 @@ async function bootstrap() {
     cookie: {
       maxAge: 24 * 60 * 60 * 1000
     }
-  }))
+  }));
+  app.use(middlewareAll);
+
   await app.listen(3000);
 }
+
 bootstrap();
