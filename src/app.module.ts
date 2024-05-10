@@ -8,11 +8,12 @@ import { FactoryTestServiceService } from "./factory-test-service/factory-test-s
 import { ListModule } from './list/list.module';
 import { ConfigModule } from "./config/config.module";
 import { UploadModule } from './upload/upload.module';
+import { LoginModule } from './login/login.module';
 
 @Module({
   imports: [ TestModule, UserModule, ListModule, ConfigModule.forRoot({
     path: '/wz'
-  }), UploadModule ],
+  }), UploadModule, LoginModule ],
   controllers: [ AppController, TestController ],
   providers: [
     AppService,

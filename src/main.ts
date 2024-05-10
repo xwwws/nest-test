@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as session from 'express-session';
-import { VersioningType } from "@nestjs/common";
+import { ValidationPipe, VersioningType } from "@nestjs/common";
 import { Request, Response, NextFunction } from 'express';
 import * as cors from 'cors';
 import { NestExpressApplication } from "@nestjs/platform-express";
@@ -45,12 +45,14 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, 'images'), {
     prefix: '/img'
   });
-  //   全局白名单
+  // 全局白名单;
   // app.use(middlewareWhiteList);
-  //  全局使用响应拦截
+  // 全局使用响应拦截;
   app.useGlobalInterceptors(new ResponseFmt());
-  //  全局使用异常拦截
-  app.useGlobalFilters(new HttpFilter())
+  // 全局使用异常拦截;
+  app.useGlobalFilters(new HttpFilter());
+  // 全局使用验证管道;
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
 }
 
