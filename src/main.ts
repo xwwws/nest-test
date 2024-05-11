@@ -8,6 +8,7 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import { join } from "path";
 import { ResponseFmt } from "./common/ResponseFmt";
 import { HttpFilter } from "./common/HttpFilter";
+import { RoleGuard } from "./guard/role/role.guard";
 
 const whiteList = [ '/list' ];
 
@@ -51,6 +52,8 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResponseFmt());
   // 全局使用异常拦截;
   app.useGlobalFilters(new HttpFilter());
+  // 全局使用守卫
+  // app.useGlobalGuards(new RoleGuard())
   // 全局使用验证管道;
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
