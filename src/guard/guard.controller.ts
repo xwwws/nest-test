@@ -3,12 +3,14 @@ import { GuardService } from './guard.service';
 import { CreateGuardDto } from './dto/create-guard.dto';
 import { UpdateGuardDto } from './dto/update-guard.dto';
 import { RoleGuard } from "./role/role.guard";
+import { ReqUrl, Role } from "./role/role.decorator";
 
 @Controller('guard')
 // controller 使用守卫
 @UseGuards(RoleGuard)
 export class GuardController {
-  constructor(private readonly guardService: GuardService) {}
+  constructor(private readonly guardService: GuardService) {
+  }
 
   @Post()
   create(@Body() createGuardDto: CreateGuardDto) {
@@ -16,8 +18,10 @@ export class GuardController {
   }
 
   @Get()
-  @SetMetadata('role', ['admin'])
-  findAll() {
+  // @SetMetadata('role', ['admin'])
+  @Role('admin')
+  findAll(@ReqUrl("ddd") url: string) {
+    console.log(url);
     return this.guardService.findAll();
   }
 
