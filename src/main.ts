@@ -9,6 +9,7 @@ import { join } from "path";
 import { ResponseFmt } from "./common/ResponseFmt";
 import { HttpFilter } from "./common/HttpFilter";
 import { RoleGuard } from "./guard/role/role.guard";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 const whiteList = [ '/list' ];
 
@@ -56,6 +57,15 @@ async function bootstrap() {
   // app.useGlobalGuards(new RoleGuard())
   // 全局使用验证管道;
   app.useGlobalPipes(new ValidationPipe());
+  const swaggerOptions = new DocumentBuilder()
+    .addBearerAuth()
+    .setTitle('next-swagger')
+    .setDescription('next-swagger-desc')
+    .setVersion('1')
+    .build();
+  const document = SwaggerModule.createDocument(app, swaggerOptions);
+  SwaggerModule.setup('/api-docs', app, document);
+
   await app.listen(3000);
 }
 
